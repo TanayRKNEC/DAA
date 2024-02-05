@@ -4,13 +4,13 @@
 
 #define V 6
 
-int minDistance(float dist[], int minpath[])
+int minDistance(float dist[], int visited[])
 {
     float min = INFINITY; 
     int min_index;
     for (int v = 0; v < V; v++)
     {
-        if (minpath[v] == 0 && dist[v] <= min)
+        if (visited[v] == 0 && dist[v] <= min)
         {
             min = dist[v];
             min_index = v;
@@ -22,24 +22,24 @@ int minDistance(float dist[], int minpath[])
 void dijkstra(float graph[V][V], int start)
 {
     float dist[V];
-    int minpath[V];
+    int visited[V];
 
     for (int i = 0; i < V; i++)
     {
         dist[i] = INFINITY;
-        minpath[i] = 0;
+        visited[i] = 0;
     }
 
     dist[start] = 0;
 
     for (int i = 0; i < V - 1; i++)
     {
-        int u = minDistance(dist, minpath);
-        minpath[u] = 1;
+        int u = minDistance(dist, visited);
+        visited[u] = 1;
 
         for (int v = 0; v < V; v++)
         {
-            if (minpath[v] == 0 && graph[u][v] && dist[u] != INFINITY && dist[u] + graph[u][v] < dist[v])
+            if (visited[v] == 0 && graph[u][v] && dist[u] != INFINITY && dist[u] + graph[u][v] < dist[v])
             {
                 dist[v] = dist[u] + graph[u][v];
             }
